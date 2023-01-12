@@ -25,7 +25,9 @@
     --faq-width-desktop: min(925px, 88vw);
 
     --faq-height-mobile: 560px;
-    --faq-height-desktop: 520px;
+    /* --faq-height-desktop: 520px; */
+    /* bit more height on desktop for the multiple panel expansion version */
+    --faq-height-desktop: 700px;
     
     --faq-padding-top-desktop: 6rem;
     /* so the focus outline doesn't look ugly */
@@ -87,7 +89,8 @@ h1 {
     width: var(--faq-width-mobile);
     /* this probably needs a min-height now that it's one */
     /* item active at a time and animated */
-    min-height: var(--faq-height-mobile);
+    /* not for the multiple panel exansion */
+    /* min-height: var(--faq-height-mobile); */
     background-color: var(--neutral-white);
     /* background probably belongs on the illustration div */
     /* background: url(../images/bg-pattern-mobile.svg) no-repeat top center var(--neutral-white); */
@@ -189,6 +192,8 @@ h1 {
         padding-top: var(--faq-padding-top-desktop);
         /* padding-bottom not necessary? we could use min-height on the section panel */
         /* maybe just a bit, see how it goes - nah use min-height */
+        /* multiple panel expansion version has big enough min-height for faq-faqs never to expand */
+        /* so padding-bottom won't make any difference */
         /* padding-bottom: 2rem; */
         padding-right: 9rem;
     }
