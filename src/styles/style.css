@@ -1,0 +1,392 @@
+:root {
+    /* colours */
+    --primary-verydarkdesaturatedblue: hsl(238, 29%, 16%);
+    --primary-softred: hsl(14, 88%, 65%);
+    --primary-softviolet: hsl(273, 75%, 66%);
+    --primary-softblue: hsl(240, 73%, 65%);
+
+    --gradient-violet-blue: linear-gradient(var(--primary-softviolet), var(--primary-softblue));
+    
+    --neutral-verydarkgrayishblue: hsl(237, 12%, 33%);
+    --neutral-darkgrayishblue: hsl(240, 6%, 50%);
+    --neutral-lightgrayishblue: hsl(240, 5%, 91%);
+
+    --neutral-white: hsl(0, 0%, 100%);
+
+    --text: var(--primary-verydarkdesaturatedblue);
+    --text-accent: var(--primary-softred);
+    --text-muted: var(--neutral-darkgrayishblue);
+    --text-muted-darker: var(--neutral-verydarkgrayishblue);
+    --bg: var(--gradient-violet-blue);
+    --trimming: var(--neutral-lightgrayishblue);
+
+    /* sizes */
+    --faq-width-mobile: min(325px, 88vw);
+    --faq-width-desktop: min(925px, 88vw);
+
+    --faq-height-mobile: 560px;
+    --faq-height-desktop: 520px;
+    
+    --faq-padding-top-desktop: 6rem;
+    /* so the focus outline doesn't look ugly */
+    /* using a variable for it bc lots of things need */
+    /* nudging the same distance */
+    --faq-item-padding: 5px;
+
+    /* font-size should be set on html element
+     if you want rem values to be relative to 
+     the value given in the design brief */
+    font-size: 12px;
+
+    /* animation / transition duration for expanding */
+    --faq-item-transition: 250ms;
+
+     /* might as well do family while we're at it */
+    font-family: 'Kumbh Sans', sans-serif;
+
+}
+
+body {
+    /* remember that gradients are not colours, but a special type of image! */
+    background: var(--bg);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: var(--text);
+}
+
+h1 {
+    font-size: 0.75rem;
+    color: var(--text);
+    text-transform: uppercase;
+    padding: 0.5rem;
+    border-bottom: 2px solid var(--text);
+    margin: 2rem 0;
+}
+
+/* utilities */
+.hidden {
+    display: none;
+}
+
+.container {
+    display: grid;
+    place-content: center;
+}
+
+.faq {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    /* no padding here, it messes with the ilustration position */
+    /* padding: 2rem 0; */
+    /* guess top margin for now - to cover the illustration offset */
+    margin-top: 30%;
+    margin-bottom: 5rem;
+    border-radius: 24px;
+    width: var(--faq-width-mobile);
+    /* this probably needs a min-height now that it's one */
+    /* item active at a time and animated */
+    min-height: var(--faq-height-mobile);
+    background-color: var(--neutral-white);
+    /* background probably belongs on the illustration div */
+    /* background: url(../images/bg-pattern-mobile.svg) no-repeat top center var(--neutral-white); */
+    /* background-size: 70%; */
+    box-shadow: 0px 12px 12px 0px hsla(0, 0%, 0%, 0.1);
+}
+
+@media (min-width: 992px) {
+    .faq {
+        flex-direction: row;
+        /* not aligning items, because the faqs will grow */
+        /* vertically when the accordion opens */
+        /* so it would shift around if it was aligned center */
+        /* use padding on the column divs instead - see variables */
+        /* and probably have to set height somewhere */
+        /* align-items: center; */
+        gap: 0;
+        width: var(--faq-width-desktop);
+        margin-top: 0;
+        /* padding: 5rem 0; */
+        /* try a min-height for desktop mode */
+        /* for this react version where only one */
+        /* item is expanded at a time, it needs to be */
+        /* big enough so that it doesn't move around each time */
+        /* an item is clicked and expanded */
+        min-height: var(--faq-height-desktop);
+    }
+}
+
+.faq-illustration {
+    display: flex;
+    flex-direction: column;
+
+    /* margin-top: -50%; */ 
+    align-items: center;
+    /* border: 1px solid tomato; */
+
+    /* to cover the illustration drop shadow */
+    /* margin needs to be padding now bc it's not a drop shadow */
+    /* it's a background */
+    padding-bottom: 10%;
+    /* background-color: coral; */
+    background: url(../images/bg-pattern-mobile.svg) no-repeat top center;
+    background-size: 70%;
+}
+
+@media (min-width: 992px) {
+    .faq-illustration {
+        flex-shrink: 0;
+        flex-basis: 50%;
+        padding-bottom: 0;
+
+        padding-top: var(--faq-padding-top-desktop);
+
+        background: url(../images/bg-pattern-desktop.svg) no-repeat top -275px right 80px; 
+        background-size: 200%;
+    }
+}
+
+.faq-illustration picture {
+    width: 70%;
+    height: auto;
+    /* NB this is % of original size
+    that's why it's not -50% like you'd expect it to be */
+    margin-top: -32%;
+    /*  no drop-shadow, it's actually a background svg 
+    on the faq section panel */
+}
+
+@media (min-width: 992px) {
+    .faq-illustration picture {
+        width: 100%;
+        height: auto;
+        /* width: 600px; */
+        margin-top: 0;
+        margin-left: -35%;
+
+        /* border: 1px solid goldenrod; */
+    }
+}
+
+.faq-faqs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 0 1.5rem;
+    margin-bottom: 4rem;
+    /* border: 1px solid teal; */
+}
+
+@media (min-width: 992px) {
+    .faq-faqs {
+        align-items: flex-start;
+        flex-grow: 1;
+        /*  bit more gap to move content away from heading */
+        gap: 2rem;
+        margin-bottom: 0;
+        padding-top: var(--faq-padding-top-desktop);
+        /* padding-bottom not necessary? we could use min-height on the section panel */
+        /* maybe just a bit, see how it goes - nah use min-height */
+        /* padding-bottom: 2rem; */
+        padding-right: 9rem;
+    }
+}
+
+.faq-faqs h2 {
+    color: var(--text);
+    font-size: 2.6rem;
+    font-weight: 700;
+    line-height: normal;
+    /* to match the padding on the dt */
+    padding-left: var(--faq-item-padding);
+    /* background-color: aqua; */
+}
+
+/* lose the dotted underline on the abbr inside the h2 */
+.faq-faqs h2 abbr {
+    text-decoration: none;
+}
+
+/* renamed faq-faqs-dl to accordion-dl for this react version
+(and probably for the vue version) so it can be a reusable component */
+
+/* NB! wasn't actually using faq-faqs-dd even though the class is in the old markup */
+/* same goes for faq-faqs-dd-content (the p inside dd) */
+
+.accordion-dl {
+    min-width: 100%;
+    /* border: 1px solid #0f0; */
+}
+
+
+
+/* .accordion-dl dd p {
+    padding: 1.1rem 0;
+} */
+
+
+/* probably use accordion-dt for this */
+.accordion-dt { 
+
+    display: flex;
+    padding-top: 1rem;
+
+    /* display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+
+    padding-top: 1rem; */
+    /* border: 1px solid #00f; */
+    /* background-color: aquamarine; */
+}
+
+/* image won't work as background bc it needs flipping 
+(for the up arrow) so try as pseudo element */
+
+/* NB! ::after was on the the dt, but we needed the */
+/* aria-expanded attr from the button to style the rotated arrow */
+/* so changed it to be on the button instead */
+.accordion-dt button::after {
+    content: "";
+    /* NB pseudo before and after are inline as default! */
+    /* summary is now flex so everything should behave as flex-item */
+
+    /* image dimensions are 10x7 px, but give it a bit more width */
+    /*  to stop the text interfering with it at low vw */
+    width: 10px;
+    height: 7px;
+    /* actually, maybe give it some padding instead */
+    /* yeah, that's more robust */
+    padding-left: 10px;
+    background: url(../images/icon-arrow-down.svg) no-repeat center right;
+    /* border: 1px solid firebrick; */
+
+    /* from https://css-tricks.com/how-to-animate-the-details-element/ */
+    transform: rotate(0);
+    transform-origin: center;
+    transition: var(--faq-item-transition) transform ease;
+}
+
+/* the ::after is on the dt, but the aria-expanded is on the button */
+/*  (inside the dt) so we probably need to set a class using the js */
+/*  that identifies when the dt is expanded */
+
+/* yeah that's not gonna work, try putting the ::after on the button */
+/* in order for that to work, we need to: */
+/* take all the declarations from the dt ruleset and put them on the button */
+
+
+.accordion-dt button[aria-expanded="true"]::after {
+    /* transform: scale(-1); */
+    transform: rotate(180deg);
+}
+
+.accordion-dt button {
+
+    /* for the button specific things */
+    border: none;
+    background-color: transparent;
+    /* needs a bit of padding for the focus outline */
+    padding: var(--faq-item-padding);
+    text-align: start;
+    /* and for the focus (set this again for :focus below) */
+    outline: none;
+
+    /* think we need a cursor pointer here as well as the dt? */
+    cursor: pointer;
+
+    font-size: 1.2rem;
+    /* normal or 400 */
+    font-weight: 400;
+    color: var(--text-muted-darker);
+
+    /* all the stuff from dt to try make ::after work on the button */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    /*  i'd feel better if this was on the dt but leave it here for now */
+    /* padding-top: 1rem; */
+
+    flex-grow: 1;
+}
+
+.accordion-dt button[aria-expanded="true"] {
+    /* bold or 700 */
+    font-weight: 700;
+    color: var(--text);
+}
+
+.accordion-dt button:hover {
+    color: var(--text-accent);
+}
+
+.accordion-dt button:focus {
+    outline: thin dotted;
+    border-radius: calc(var(--faq-item-padding) * 2);
+}
+
+/* not sure about the open state hover, design brief isn't clear */
+/* if there's a hover user might not notice that the heading has changed */
+/* it does go bold though, so let it hover */
+
+/* the padding / margin / spacing is a bit fiddly
+bc the dt and the dd are siblings - there isn't a parent 
+for each element in the list - just a big list div */
+
+/*  so I reckon it should be top padding or margin on 
+the .desc (the controlledNode)
+and bottom padding on the dd (which is visible all the time 
+but empty when aria-expanded is false 
+plus top padding or margin on the dt (see (a long way) above) */
+
+.accordion-dd {
+    /* padding: 1.1rem 0; */
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--trimming);
+
+    /* for the animation */
+    overflow: hidden;
+    height: 0;
+
+    transition: height ease var(--faq-item-transition);
+}
+
+/* .accordion-dd.open {
+    height: 100px;
+} */
+
+/* the div.desc used to be a p */
+/* wai aria example uses a div with class desc (inside the dd) */
+
+.accordion-desc {
+    /* padding: 1.1rem 0; */
+    color: var(--text-muted);
+    padding-top: 0.7rem;
+    padding-right: 2rem;
+    /* to match the padding on the dt */
+    padding-left: 2px;
+    /* border: 1px solid #0ff; */
+}
+
+/* @keyframes slideopen {
+    from { 
+        max-height: 0;
+    }
+    to { 
+        max-height: 250px;
+    }
+} */
+
+/* frontend mentor attribution style */
+
+.attribution { 
+    font-size: 11px; text-align: center; 
+}
+
+.attribution a { 
+    color: hsl(228, 45%, 44%); 
+}
